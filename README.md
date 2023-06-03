@@ -1,2 +1,2 @@
 # adventofcode
-Advent of Code in Java
+Advent of Code in Java/Go
