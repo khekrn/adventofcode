@@ -1,8 +1,9 @@
-package day1
+package main
 
 import (
+	_ "embed"
+	"flag"
 	"fmt"
-	"os"
 )
 
 // --- Day 1: Not Quite Lisp ---
@@ -34,18 +35,12 @@ import (
 // ))) and )())()) both result in floor -3.
 // To what floor do the instructions take Santa?
 
-func readInput() string {
-	data, err := os.ReadFile("2015/day1/part1.txt")
-	if err != nil {
-		fmt.Println("error: cannot able to read part1.txt - ", err.Error())
-		os.Exit(1)
-	}
-	return string(data)
-}
+//go:embed part1.txt
+var input string
 
-func Part1() int {
+func part1() int {
 	floor := 0
-	for _, char := range readInput() {
+	for _, char := range input {
 		switch char {
 		case '(':
 			floor += 1
@@ -68,9 +63,9 @@ func Part1() int {
 // ()()) causes him to enter the basement at character position 5.
 // What is the position of the character that causes Santa to first enter
 // the basement?
-func Part2() int {
+func part2() int {
 	floor := 0
-	for position, char := range readInput() {
+	for position, char := range input {
 		switch char {
 		case '(':
 			floor += 1
@@ -82,4 +77,18 @@ func Part2() int {
 		}
 	}
 	return 0
+}
+
+func main() {
+	var part int
+	flag.IntVar(&part, "part", 1, "part 1 or 2")
+	flag.Parse()
+	fmt.Println("Running Part = ", part)
+	result := 0
+	if part == 1 {
+		result = part1()
+	} else {
+		result = part2()
+	}
+	fmt.Println("Result = ", result)
 }
